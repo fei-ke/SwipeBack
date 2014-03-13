@@ -5,4 +5,9 @@
 		android:title="@string/swipe_about_title"
 		android:showAsAction="always"/>
     
+	<item
+        android:id="@+id/quick_setting"
+		android:title="@string/quick_setting"
+		android:showAsAction="always"/>
+    
 </menu>

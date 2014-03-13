@@ -1,27 +1,23 @@
 package us.shandian.mod.swipeback.ui;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.preference.SwitchPreference;
-import android.preference.MultiSelectListPreference;
 import android.preference.EditTextPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.view.MenuItem;
-import android.view.MenuInflater;
+import android.preference.PreferenceActivity;
+import android.preference.SwitchPreference;
 import android.view.Menu;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-
-import java.util.Set;
-import java.util.HashSet;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import us.shandian.mod.swipeback.R;
 import us.shandian.mod.swipeback.provider.SettingsProvider;
-import us.shandian.mod.swipeback.ui.SwipeBackPerApp;
 import us.shandian.mod.swipeback.ui.preference.SeekBarPreference;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class SwipeBackSettings extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener
 {
