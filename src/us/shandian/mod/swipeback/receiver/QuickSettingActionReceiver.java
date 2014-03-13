@@ -1,14 +1,18 @@
 
 package us.shandian.mod.swipeback.receiver;
 
+import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.NOTIFICATION_ID;
 import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE;
 import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE_ADD;
 import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE_ADD_APP;
+import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE_CLOSE;
 import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE_MORE;
 import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE_REMOVE;
 import static us.shandian.mod.swipeback.receiver.QuickSettingNotification.TYPE_REMOVE_APP;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,10 +20,13 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import us.shandian.mod.swipeback.R;
@@ -33,87 +40,101 @@ public class QuickSettingActionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         int type = intent.getIntExtra(TYPE, 0);
+        final String packageName = SettingsProvider.CUR_PACKAGE_NAME;
+        final String componentName = SettingsProvider.CUR_COMPONENT_NAME;
+        final String activityTitle = SettingsProvider.CUR_ACTIVITY_TITLE;
+
+        final PerActivitySetting setting = PerActivitySetting.loadFromPreference(context, packageName, componentName);
+        setting.setPackageName(packageName);
+        setting.setComponentName(componentName);
+        setting.setTitle(activityTitle);
+
+        String appName = "";
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(packageName, 0);
+            appName = packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         switch (type) {
             case TYPE_ADD: {
-                PerActivitySetting setting = new PerActivitySetting();
-
-                setting.setPackageName(SettingsProvider.CUR_PACKAGE_NAME);
-                setting.setComponentName(SettingsProvider.CUR_COMPONENT_NAME);
                 setting.setEnable(true);
                 setting.saveToPreference(context);
 
-                Toast.makeText(context, SettingsProvider.CUR_ACTIVITY_TITLE + " 成功", 0).show();
+                Toast.makeText(context, activityTitle + " 成功", 0).show();
                 break;
             }
             case TYPE_REMOVE: {
-                PerActivitySetting setting = new PerActivitySetting();
-
-                setting.setPackageName(SettingsProvider.CUR_PACKAGE_NAME);
-                setting.setComponentName(SettingsProvider.CUR_COMPONENT_NAME);
                 setting.setEnable(false);
                 setting.saveToPreference(context);
 
-                Toast.makeText(context, SettingsProvider.CUR_ACTIVITY_TITLE + " 成功", 0).show();
+                Toast.makeText(context, activityTitle + " 成功", 0).show();
                 break;
             }
             case TYPE_ADD_APP: {
-                String appName = "";
-                try {
-                    PackageInfo packageInfo = context.getPackageManager().getPackageInfo(SettingsProvider.CUR_PACKAGE_NAME, 0);
-                    appName = packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
-                } catch (NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                SettingsProvider.putBoolean(context, SettingsProvider.CUR_PACKAGE_NAME, SettingsProvider.SWIPEBACK_ENABLE, true);
-                Toast.makeText(context, appName + "(" + SettingsProvider.CUR_PACKAGE_NAME + ") 成功", 0).show();
+                SettingsProvider.putBoolean(context, packageName, SettingsProvider.SWIPEBACK_ENABLE, true);
+                Toast.makeText(context, appName + "(" + packageName + ") 成功", 0).show();
                 break;
             }
             case TYPE_REMOVE_APP: {
-                String appName = "";
-                try {
-                    PackageInfo packageInfo = context.getPackageManager().getPackageInfo(SettingsProvider.CUR_PACKAGE_NAME, 0);
-                    appName = packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
-                } catch (NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-                SettingsProvider.putBoolean(context, SettingsProvider.CUR_PACKAGE_NAME, SettingsProvider.SWIPEBACK_ENABLE, false);
-                Toast.makeText(context, appName + "(" + SettingsProvider.CUR_PACKAGE_NAME + ") 成功", 0).show();
+                SettingsProvider.putBoolean(context, packageName, SettingsProvider.SWIPEBACK_ENABLE, false);
+                Toast.makeText(context, appName + "(" + packageName + ") 成功", 0).show();
                 break;
             }
-
+            case TYPE_CLOSE:
+                NotificationManager nm = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
+                nm.cancel(NOTIFICATION_ID);
+                SettingsProvider.putBoolean(context, SettingsProvider.PACKAGE_NAME, SettingsProvider.QUIICK_SETTING_ENABLE, false);
+                break;
             case TYPE_MORE:
+                int edge = setting.getEdge();
                 final View contentView = View.inflate(context, R.layout.layout_quick_setting_more, null);
+                final CheckBox checkBoxLeft = (CheckBox) contentView.findViewById(R.id.checkBox_left);
+                final CheckBox checkBoxRight = (CheckBox) contentView.findViewById(R.id.checkBox_right);
+                final CheckBox checkBoxBottom = (CheckBox) contentView.findViewById(R.id.checkBox_bottom);
+
+                TextView textViewAppName = (TextView) contentView.findViewById(R.id.textView_app_name);
+                textViewAppName.setText(appName + "(" + packageName + ")");
+
+                TextView textViewActivityName = (TextView) contentView.findViewById(R.id.textView_activity_name);
+                textViewActivityName.setText(activityTitle + "(" + componentName + ")");
+
+                ImageView imageViewIcon = (ImageView) contentView.findViewById(R.id.imageView_app_icon);
+                Drawable drawable = packageInfo.applicationInfo.loadIcon(context.getPackageManager());
+                imageViewIcon.setImageDrawable(drawable);
+
+                if ((edge & SettingsProvider.SWIPEBACK_EDGE_LEFT) != 0) {
+                    checkBoxLeft.setChecked(true);
+                }
+                if ((edge & SettingsProvider.SWIPEBACK_EDGE_RIGHT) != 0) {
+                    checkBoxRight.setChecked(true);
+                }
+                if ((edge & SettingsProvider.SWIPEBACK_EDGE_BOTTOM) != 0) {
+                    checkBoxBottom.setChecked(true);
+                }
+
                 OnClickListener listener = new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PerActivitySetting setting = new PerActivitySetting();
                         setting.setEnable(true);
-                        setting.setPackageName(SettingsProvider.CUR_PACKAGE_NAME);
-                        setting.setComponentName(SettingsProvider.CUR_COMPONENT_NAME);
-                        setting.setTitle(SettingsProvider.CUR_ACTIVITY_TITLE);
                         int edge = 0;
 
-                        CheckBox checkBox = (CheckBox) contentView.findViewById(R.id.checkBox_left);
-                        if (checkBox.isChecked()) {
+                        if (checkBoxLeft.isChecked()) {
                             edge |= SettingsProvider.SWIPEBACK_EDGE_LEFT;
                         }
-                        checkBox = (CheckBox) contentView.findViewById(R.id.checkBox_right);
-                        if (checkBox.isChecked()) {
+                        if (checkBoxRight.isChecked()) {
                             edge |= SettingsProvider.SWIPEBACK_EDGE_RIGHT;
                         }
-                        checkBox = (CheckBox) contentView.findViewById(R.id.checkBox_bottom);
-                        if (checkBox.isChecked()) {
+                        if (checkBoxBottom.isChecked()) {
                             edge |= SettingsProvider.SWIPEBACK_EDGE_BOTTOM;
                         }
                         setting.setEdge(edge);
                         setting.saveToPreference(context);
                     }
                 };
-                AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setIcon(R.drawable.ic_launcher)
-                        .setTitle(SettingsProvider.CUR_ACTIVITY_TITLE)
-                        .setMessage(SettingsProvider.CUR_COMPONENT_NAME)
+                AlertDialog dialog = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK)
                         .setPositiveButton("确定", listener)
                         .setNegativeButton("取消", null)
                         .create();

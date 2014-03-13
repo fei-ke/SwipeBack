@@ -1,13 +1,20 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	
-	<item
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_menu_search"
+        android:showAsAction="ifRoom|withText"
+        android:title="搜索">
+    </item>
+    <item
         android:id="@+id/about"
-		android:title="@string/swipe_about_title"
-		android:showAsAction="always"/>
-    
-	<item
+        android:showAsAction="always"
+        android:title="@string/swipe_about_title"/>
+    <item
         android:id="@+id/quick_setting"
-		android:title="@string/quick_setting"
-		android:showAsAction="always"/>
-    
+        android:icon="@drawable/ic_menu_add"
+        android:showAsAction="always"
+        android:title="@string/quick_setting"/>
+
 </menu>

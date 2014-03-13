@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import us.shandian.mod.swipeback.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import us.shandian.mod.swipeback.R;
 
 public class SwipeBackLayout extends FrameLayout {
     /**

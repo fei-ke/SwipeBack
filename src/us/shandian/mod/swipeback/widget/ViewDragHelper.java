@@ -20,9 +20,10 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
-import android.widget.Scroller;
-import android.view.*;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.animation.Interpolator;
+import android.widget.Scroller;
 
 import java.util.Arrays;
 

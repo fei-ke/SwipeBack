@@ -1,12 +1,12 @@
 package us.shandian.mod.swipeback.ui;
 
-import android.os.Bundle;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.MenuItem;
+import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
 import us.shandian.mod.swipeback.R;
 

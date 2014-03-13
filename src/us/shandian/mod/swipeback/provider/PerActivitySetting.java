@@ -4,16 +4,18 @@ package us.shandian.mod.swipeback.provider;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.Serializable;
-
 import de.robv.android.xposed.XSharedPreferences;
 
+import java.io.Serializable;
+
 public class PerActivitySetting implements Serializable {
+    private static final long serialVersionUID = 6360147169785799384L;
+
     boolean isEnable = true;
     String packageName = "";
     String componentName = "";
     String title = "";
-    int edge = -1;
+    int edge = 0;
 
     public boolean isEnable() {
         return isEnable;
@@ -70,22 +72,31 @@ public class PerActivitySetting implements Serializable {
 
     }
 
+    @SuppressWarnings("deprecation")
+    public static PerActivitySetting loadFromPreference(Context context, String packageName,
+            String componentName) {
+        SharedPreferences prefs = context.getSharedPreferences(packageName, Context.MODE_WORLD_READABLE);
+        String content = prefs.getString(componentName, null);
+        return loadFromText(content);
+
+    }
+
     public static PerActivitySetting loadFromText(String value) {
         if (value != null) {
             PerActivitySetting setting = new PerActivitySetting();
             String[] values = value.split("\\|");
             setting.componentName = values[0];
-            setting.isEnable = Boolean.getBoolean(values[1]);
+            setting.isEnable = Boolean.valueOf(values[1]);
             setting.title = values[2];
             setting.edge = Integer.valueOf(values[3]);
             return setting;
         }
-        return null;
+        return new PerActivitySetting();
     }
 
+    @SuppressWarnings("deprecation")
     public boolean saveToPreference(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(packageName,
-                Context.MODE_WORLD_READABLE);
+        SharedPreferences preferences = context.getSharedPreferences(packageName, Context.MODE_WORLD_READABLE);
         if (this.isEnable && edge == -1) {
             return preferences.edit().remove(packageName).commit();
         }

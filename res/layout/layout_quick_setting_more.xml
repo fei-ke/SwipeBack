@@ -1,72 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="300dp"
     android:layout_gravity="center"
     android:orientation="horizontal"
     android:paddingTop="5dp" >
 
     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageView_app_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:src="@drawable/ic_launcher" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView1"
-        android:layout_marginLeft="26dp"
-        android:layout_toRightOf="@+id/imageView1"
-        android:text="当前应用:" />
+        android:layout_alignTop="@+id/imageView_app_icon"
+        android:layout_toRightOf="@+id/imageView_app_icon"
+        android:text="应用:" />
 
     <TextView
+        android:id="@+id/textView_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView1"
-        android:layout_marginLeft="26dp"
-        android:layout_toRightOf="@+id/imageView1"
-        android:text="当前页面:" />
+        android:layout_alignTop="@+id/imageView_app_icon"
+        android:layout_toRightOf="@id/textView1"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imageView_app_icon"
+        android:layout_toRightOf="@+id/imageView_app_icon"
+        android:text="页面:" />
+
+    <TextView
+        android:id="@+id/textView_activity_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imageView_app_icon"
+        android:layout_toRightOf="@+id/textView2"
+        android:singleLine="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView1"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:layout_below="@id/imageView_app_icon"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingLeft="20dip" >
 
         <CheckBox
             android:id="@+id/checkBox_left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/imageView1"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="左边" />
 
         <CheckBox
             android:id="@+id/checkBox_right"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/imageView1"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="右边" />
 
         <CheckBox
             android:id="@+id/checkBox_bottom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/imageView1"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:text="下边" />
+            android:gravity="center"
+            android:text="底边" />
     </LinearLayout>
 
 </RelativeLayout>

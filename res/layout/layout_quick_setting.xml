@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="+\n单页"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_remove"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="-\n单页"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_add_app"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="+\n应用"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_remove_app"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="-\n应用"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_more"
@@ -63,7 +63,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="更多"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/button_close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_menu_cancel"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </LinearLayout>

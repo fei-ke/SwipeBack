@@ -2,38 +2,31 @@
 package us.shandian.mod.swipeback.hook;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.content.pm.ActivityInfo;
-import android.view.View;
-import android.provider.Settings;
 import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
 
-import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.IXposedHookInitPackageResources;
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
-import de.robv.android.xposed.IXposedHookZygoteInit.StartupParam;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
-
 import us.shandian.mod.swipeback.app.SwipeBackActivityHelper;
-import us.shandian.mod.swipeback.widget.SwipeBackLayout;
 import us.shandian.mod.swipeback.provider.PerActivitySetting;
 import us.shandian.mod.swipeback.provider.SettingsProvider;
+import us.shandian.mod.swipeback.widget.SwipeBackLayout;
 
 import java.util.ArrayList;
 
@@ -107,18 +100,16 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                             // Do this only when enabled
                             SettingsProvider.reload();
                             if (SettingsProvider.getBoolean(packageName, SettingsProvider.SWIPEBACK_ENABLE, true)) {
-                                int edge = -1;
+                                int edge = 0;
                                 // 处理单个页面
                                 String curComponentClassName = activity.getComponentName().getClassName();
                                 XSharedPreferences preferences = new XSharedPreferences(SettingsProvider.PACKAGE_NAME, packageName);
                                 preferences.makeWorldReadable();
                                 PerActivitySetting activitySetting = PerActivitySetting.loadFromPreference(packageName, curComponentClassName);
-                                if (activitySetting != null && !activitySetting.isEnable()) {
+                                if (!activitySetting.isEnable()) {
                                     return;
                                 }
-                                if (activitySetting != null) {
-                                    edge = activitySetting.getEdge();
-                                }
+                                edge = activitySetting.getEdge();
 
                                 SwipeBackActivityHelper helper = new SwipeBackActivityHelper(activity);
 
@@ -131,7 +122,7 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                                 helper.getSwipeBackLayout().setEnableGesture(true);
 
                                 // Get the egde
-                                if (edge == -1) {
+                                if (edge == 0) {
                                     edge = SettingsProvider.getInt(packageName,
                                             SettingsProvider.SWIPEBACK_EDGE,
                                             0 | SettingsProvider.SWIPEBACK_EDGE_LEFT);

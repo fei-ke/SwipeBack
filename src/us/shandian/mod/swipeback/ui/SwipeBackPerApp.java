@@ -3,31 +3,29 @@ package us.shandian.mod.swipeback.ui;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
-import android.net.Uri;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler;
+import android.os.Message;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Menu;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-
-import java.util.List;
-import java.util.ArrayList;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import us.shandian.mod.swipeback.R;
+import us.shandian.mod.swipeback.adapter.ApplicationAdapter;
 import us.shandian.mod.swipeback.provider.SettingsProvider;
 import us.shandian.mod.swipeback.receiver.QuickSettingNotification;
-import us.shandian.mod.swipeback.adapter.ApplicationAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
 {
@@ -40,11 +38,14 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
         public void handleMessage(Message msg)
         {
             if (msg.what == 0) {
+                mAdapter = new ApplicationAdapter(mContext, 0, (ArrayList<ApplicationInfo>) msg.obj);
                 setListAdapter(mAdapter);
                 mDialog.dismiss();
             }
         }
     };
+
+    protected String nameFilter = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,13 +56,18 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
 
         // Init the list
         mContext = this;
-        mDialog = ProgressDialog.show(mContext, "", mContext.getString(R.string.please_wait), true,
-                false);
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage(getString(R.string.please_wait));
+        mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mDialog.setCancelable(false);
+        mDialog.show();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mAdapter = new ApplicationAdapter(mContext, 0, getAppList());
-                mHandler.sendEmptyMessage(0);
+                ArrayList<ApplicationInfo> applist = getAppList();
+                Message msg = mHandler.obtainMessage(0, applist);
+                mHandler.sendMessage(msg);
             }
         }).start();
     }
@@ -70,6 +76,26 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.perapp, menu);
+        // 搜索
+        final SearchView searchView = (SearchView) menu.getItem(0).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                nameFilter = query;
+                mAdapter.getFilter().filter(nameFilter);
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                nameFilter = newText;
+                mAdapter.getFilter().filter(nameFilter);
+                return false;
+            }
+
+        });
         return true;
     }
 
@@ -90,13 +116,16 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
     private ArrayList<ApplicationInfo> getAppList() {
 
         List<ApplicationInfo> list = mContext.getPackageManager().getInstalledApplications(
-                PackageManager.GET_META_DATA);
+                PackageManager.GET_GIDS);
         ArrayList<ApplicationInfo> applist = new ArrayList<ApplicationInfo>();
+        mDialog.setMax(list.size());
+        PackageManager pm = mContext.getPackageManager();
+        int i = 1;
         for (ApplicationInfo info : list) {
+            mDialog.setProgress(i++);
             try {
-                if (null != mContext.getPackageManager()
-                        .getLaunchIntentForPackage(info.packageName)
-                        && !info.packageName.equals(mContext.getApplicationInfo().packageName)) {
+                if (null != pm.getLaunchIntentForPackage(info.packageName) && !info.packageName.equals(mContext.getApplicationInfo().packageName)) {
+                    info.name = info.loadLabel(pm).toString();
                     applist.add(info);
                 }
             } catch (Exception e) {

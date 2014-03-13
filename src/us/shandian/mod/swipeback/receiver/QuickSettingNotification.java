@@ -7,22 +7,26 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import us.shandian.mod.swipeback.R;
+import us.shandian.mod.swipeback.provider.SettingsProvider;
 
 public class QuickSettingNotification {
     private static final String ACTION = "us.shandian.mod.swipeback.QuickSettingActionReceiver";
+    public static final int NOTIFICATION_ID = 0x111;
+
     public static final String TYPE = "type";
     public static final int TYPE_ADD = 1;
     public static final int TYPE_REMOVE = 2;
     public static final int TYPE_ADD_APP = 3;
     public static final int TYPE_REMOVE_APP = 4;
     public static final int TYPE_MORE = 5;
+    public static final int TYPE_CLOSE = 6;
 
     public static void showAddNotificationView(Context context)
     {
+        SettingsProvider.putBoolean(context, SettingsProvider.PACKAGE_NAME, SettingsProvider.QUIICK_SETTING_ENABLE, true);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_quick_setting);
 
@@ -51,12 +55,18 @@ public class QuickSettingNotification {
         PendingIntent intentMore = PendingIntent.getBroadcast(context, TYPE_MORE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.button_more, intentMore);
 
+        intent = new Intent(ACTION);
+        intent.putExtra(TYPE, TYPE_CLOSE);
+        PendingIntent intentClose = PendingIntent.getBroadcast(context, TYPE_CLOSE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.button_close, intentClose);
+
         Notification notification = new Notification.Builder(context)
                 .setTicker("在通知栏进行操作")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContent(views)
                 .build();
+        notification.flags |= Notification.FLAG_NO_CLEAR;
         NotificationManager nm = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
-        nm.notify(0x11, notification);
+        nm.notify(NOTIFICATION_ID, notification);
     }
 }

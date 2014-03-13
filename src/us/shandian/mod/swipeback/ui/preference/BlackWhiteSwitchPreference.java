@@ -1,8 +1,8 @@
 package us.shandian.mod.swipeback.ui.preference;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.preference.SwitchPreference;
+import android.util.AttributeSet;
 
 public class BlackWhiteSwitchPreference extends SwitchPreference
 {

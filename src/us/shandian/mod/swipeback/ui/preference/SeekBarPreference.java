@@ -17,8 +17,6 @@
 
 package us.shandian.mod.swipeback.ui.preference;
 
-import us.shandian.mod.swipeback.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
@@ -30,6 +28,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import us.shandian.mod.swipeback.R;
 
 public class SeekBarPreference extends Preference 
                                implements OnSeekBarChangeListener, View.OnClickListener {

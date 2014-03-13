@@ -4,18 +4,12 @@ package us.shandian.mod.swipeback.app;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.PixelFormat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-
-import java.lang.reflect.Method;
 
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-
-import us.shandian.mod.swipeback.widget.SwipeBackLayout;
 import us.shandian.mod.swipeback.provider.SettingsProvider;
+import us.shandian.mod.swipeback.widget.SwipeBackLayout;
 
 /**
  * @author Yrom
