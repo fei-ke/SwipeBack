@@ -40,7 +40,7 @@ public class ApplicationAdapter extends ArrayAdapter<ApplicationInfo>
         this.mAppsList = appsList;
         filteredAppList.addAll(appsList);
         filter = new AppListFilter(this);
-        
+
         mPackageManager = mContext.getPackageManager();
 
         // Sort in alphabetical
@@ -58,7 +58,8 @@ public class ApplicationAdapter extends ArrayAdapter<ApplicationInfo>
 
         // Add "Global"
         ApplicationInfo info = new ApplicationInfo();
-        info.packageName = mContext.getResources().getString(R.string.swipe_global);
+        info.packageName = mContext.getPackageName();
+        info.name = mContext.getResources().getString(R.string.swipe_global);
         mAppsList.add(0, info);
 
         for (int i = 0; i < mAppsList.size(); i++) {
@@ -71,11 +72,9 @@ public class ApplicationAdapter extends ArrayAdapter<ApplicationInfo>
                 ImageView iconview = (ImageView) view.findViewById(R.id.per_app_icon);
 
                 if (i > 0) {
-                    appName.setText(data.loadLabel(mPackageManager));
                     iconview.setImageDrawable(data.loadIcon(mPackageManager));
-                } else {
-                    appName.setText(data.packageName);
                 }
+                appName.setText(data.name);
             }
             mViews.put(data.packageName, view);
         }

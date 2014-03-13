@@ -138,12 +138,12 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
+        String packageName = mAdapter.getItem(position).packageName;
         Bundle bundle = new Bundle();
-        if (position == 0) {
+        if (packageName.equals(getPackageName())) {
             bundle.putString("us.shandian.mod.swipeback.PREFIX", SettingsProvider.PREFIX_GLOBAL);
         } else {
-            bundle.putString("us.shandian.mod.swipeback.PREFIX",
-                    mAdapter.getItem(position).packageName);
+            bundle.putString("us.shandian.mod.swipeback.PREFIX", packageName);
         }
         bundle.putString("us.shandian.mod.swipeback.TITLE",
                 ((TextView) view.findViewById(R.id.per_app_name)).getText().toString());
