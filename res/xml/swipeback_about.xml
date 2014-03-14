@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<Preference
-		android:key="swipe_version"
-		android:title="@string/swipe_version_title"
-		android:summary="0.0.0" />
-	
-	<Preference
-		android:key="swipe_developers"
-		android:title="@string/swipe_developers_title"
-		android:summary="@string/swipe_developers_summary" />
-	
-	<Preference
-		android:key="swipe_community"
-		android:title="@string/swipe_community_title"
-		android:summary="@string/swipe_community_summary">
-	</Preference>
-	
-	<Preference
-		android:key="swipe_homepage"
-		android:title="@string/swipe_website_title"
-		android:summary="@string/swipe_website_summary">
-	</Preference>
-	
+    <Preference
+        android:key="swipe_version"
+        android:summary="0.0.0"
+        android:title="@string/swipe_version_title" />
+    <Preference
+        android:key="swipe_developers"
+        android:summary="@string/swipe_developers_summary"
+        android:title="@string/swipe_developers_title" />
+    <Preference
+        android:key="mod"
+        android:summary="@string/mod_me"
+        android:title="@string/mod" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/mod_sina_weibo" />
+    </Preference>
+    <Preference
+        android:key="swipe_community"
+        android:summary="@string/swipe_community_summary"
+        android:title="@string/swipe_community_title" >
+    </Preference>
+    <Preference
+        android:key="swipe_homepage"
+        android:summary="@string/swipe_website_summary"
+        android:title="@string/swipe_website_title" >
+    </Preference>
+
 </PreferenceScreen>
