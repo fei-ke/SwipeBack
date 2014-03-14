@@ -63,24 +63,23 @@ public class QuickSettingActionReceiver extends BroadcastReceiver {
                 setting.setEnable(true);
                 setting.saveToPreference(context);
 
-                Toast.makeText(context, activityTitle + " 成功", 0).show();
+                Toast.makeText(context, context.getString(R.string.quick_setting_add_scuess, activityTitle), Toast.LENGTH_SHORT).show();
                 break;
             }
             case TYPE_REMOVE: {
                 setting.setEnable(false);
                 setting.saveToPreference(context);
-
-                Toast.makeText(context, activityTitle + " 成功", 0).show();
+                Toast.makeText(context, context.getString(R.string.quick_setting_remove_scuess, activityTitle), Toast.LENGTH_SHORT).show();
                 break;
             }
             case TYPE_ADD_APP: {
                 SettingsProvider.putBoolean(context, packageName, SettingsProvider.SWIPEBACK_ENABLE, true);
-                Toast.makeText(context, appName + "(" + packageName + ") 成功", 0).show();
+                Toast.makeText(context, context.getString(R.string.quick_setting_add_app_scuess, appName), Toast.LENGTH_SHORT).show();
                 break;
             }
             case TYPE_REMOVE_APP: {
                 SettingsProvider.putBoolean(context, packageName, SettingsProvider.SWIPEBACK_ENABLE, false);
-                Toast.makeText(context, appName + "(" + packageName + ") 成功", 0).show();
+                Toast.makeText(context, context.getString(R.string.quick_setting_remove_app_scuess, appName), Toast.LENGTH_SHORT).show();
                 break;
             }
             case TYPE_CLOSE:
@@ -140,8 +139,8 @@ public class QuickSettingActionReceiver extends BroadcastReceiver {
                     }
                 };
                 AlertDialog dialog = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK)
-                        .setPositiveButton("确定", listener)
-                        .setNegativeButton("取消", null)
+                        .setPositiveButton(R.string.quick_setting_ok, listener)
+                        .setNegativeButton(R.string.quick_setting_cancel, null)
                         .create();
                 dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                 dialog.setView(contentView);

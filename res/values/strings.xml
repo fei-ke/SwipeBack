@@ -2,40 +2,58 @@
 <resources>
 
     <string name="app_name">SwipeBack</string>
-	<string name="app_des">Enables global swipe back gesture.</string>
-	
-	<!-- Messages -->
-	<string name="please_wait">Please wait...</string>
-	
-	<!-- Swipe settings -->
-	<string name="swipe_enable">Swipe Back</string>
-	<string name="swipe_edge">Swipe Edge</string>
-	<string name="swipe_edge_left">Left</string>
-	<string name="swipe_edge_right">Right</string>
-	<string name="swipe_edge_bottom">Bottom</string>
-	<string name="swipe_edge_size">Edge Size</string>
-	<string name="swipe_sensitivity">Swipe Sensitivity</string>
-	
-	<!-- Surface recycling system -->
-	<string name="swipe_recycle_surface">Recycle surface</string>
-	<string name="swipe_recycle_surface_des">Disabling this may fix some crashes. \nONLY FOR ADVANCED USERS. \n NEEDS REBOOT</string>
-	
-	<!-- About -->
-	<string name="swipe_about_title">About</string>
-	<string name="swipe_version_title">SwipeBack Version</string>
-	<string name="swipe_developers_title">Developers</string>
-	<string name="swipe_developers_summary">\@PeterCxy \n\@Issacw0ng</string>
-	<string name="swipe_community_title">Community</string>
-	<string name="swipe_community_summary">Access our community url</string>
-	<string name="swipe_community_url">http://forum.xda-developers.com/showthread.php?t=2592116</string>
-	<string name="swipe_website_title">Home Page</string>
-	<string name="swipe_website_summary">Visit our website</string>
-	<string name="swipe_website_url">http://losp.info</string>
-	
-	<!-- Global Settings -->
-	<string name="swipe_global">Global Settings (Can be overridden by the following)</string>
-	
-	<!-- Reset -->
-	<string name="swipe_reset">Reset</string>
-	
+    <string name="app_des">Enables global swipe back gesture.</string>
+
+    <!-- Messages -->
+    <string name="please_wait">Please wait...</string>
+
+    <!-- Swipe settings -->
+    <string name="swipe_enable">Swipe Back</string>
+    <string name="swipe_edge">Swipe Edge</string>
+    <string name="swipe_edge_left">Left</string>
+    <string name="swipe_edge_right">Right</string>
+    <string name="swipe_edge_bottom">Bottom</string>
+    <string name="swipe_edge_size">Edge Size</string>
+    <string name="swipe_sensitivity">Swipe Sensitivity</string>
+
+    <!-- Surface recycling system -->
+    <string name="swipe_recycle_surface">Recycle surface</string>
+    <string name="swipe_recycle_surface_des">Disabling this may fix some crashes. \nONLY FOR ADVANCED USERS. \n NEEDS REBOOT</string>
+
+    <!-- About -->
+    <string name="swipe_about_title">About</string>
+    <string name="swipe_version_title">SwipeBack Version</string>
+    <string name="swipe_developers_title">Developers</string>
+    <string name="swipe_developers_summary">\@PeterCxy \n\@Issacw0ng</string>
+    <string name="swipe_community_title">Community</string>
+    <string name="swipe_community_summary">Access our community url</string>
+    <string name="swipe_community_url">http://forum.xda-developers.com/showthread.php?t=2592116</string>
+    <string name="swipe_website_title">Home Page</string>
+    <string name="swipe_website_summary">Visit our website</string>
+    <string name="swipe_website_url">http://losp.info</string>
+
+    <!-- Global Settings -->
+    <string name="swipe_global">Global Settings (Can be overridden by the following)</string>
+
+    <!-- Reset -->
+    <string name="swipe_reset">Reset</string>
+
+    <!-- quick setting -->
+    <string name="search">Search</string>
+    <string name="quick_setting">Add</string>
+    <string name="quick_setting_cur_app">Current App:</string>
+    <string name="quick_setting_cur_ativity">Current Page:</string>
+    <string name="quick_notification_ticker">Switch to the page to be handle, then operate in the notification panel</string>
+    <string name="quick_setting_remove">×\nPage</string>
+    <string name="quick_setting_remove_app">×\nApp</string>
+    <string name="quick_setting_add">√\nPage</string>
+    <string name="quick_setting_add_app">√\nApp</string>
+    <string name="quick_setting_more">＝\nMore</string>
+    <string name="quick_setting_remove_scuess">Page: \"%s\" disabled</string>
+    <string name="quick_setting_add_scuess">Page: \"%s\" enabled</string>
+    <string name="quick_setting_remove_app_scuess">Application: \"%s\" disabled</string>
+    <string name="quick_setting_add_app_scuess">Application: \"%s\" enabled</string>
+    <string name="quick_setting_ok">OK</string>
+    <string name="quick_setting_cancel">Cancel</string>
+
 </resources>

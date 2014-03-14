@@ -37,7 +37,22 @@
     <!-- Reset -->
     <string name="swipe_reset">重置</string>
 
-    <!-- 快速设置 -->
+    <!-- quick setting -->
+    <string name="search">搜索</string>
     <string name="quick_setting">添加</string>
+    <string name="quick_setting_cur_app">当前应用:</string>
+    <string name="quick_setting_cur_ativity">当前页面:</string>
+    <string name="quick_notification_ticker">切换到要处理的页面,然后在通知栏进行操作</string>
+    <string name="quick_setting_remove">×\n单页</string>
+    <string name="quick_setting_remove_app">×\n单页</string>
+    <string name="quick_setting_add">√\n单页</string>
+    <string name="quick_setting_add_app">√\n应用</string>
+    <string name="quick_setting_more">＝\n更多</string>
+    <string name="quick_setting_remove_scuess">页面: \"%s\" 已禁止</string>
+    <string name="quick_setting_add_scuess">页面: \"%s\" 已允许</string>
+    <string name="quick_setting_remove_app_scuess">应用: \"%s\" 已禁止</string>
+    <string name="quick_setting_add_app_scuess">应用: \"%s\" 已允许</string>
+    <string name="quick_setting_ok">确定</string>
+    <string name="quick_setting_cancel">取消</string>
 
 </resources>

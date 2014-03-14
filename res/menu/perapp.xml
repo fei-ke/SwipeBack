@@ -4,17 +4,17 @@
         android:id="@+id/search"
         android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
-        android:showAsAction="ifRoom|withText"
-        android:title="搜索">
-    </item>
-    <item
-        android:id="@+id/about"
         android:showAsAction="always"
-        android:title="@string/swipe_about_title"/>
+        android:title="@string/search">
+    </item>
     <item
         android:id="@+id/quick_setting"
         android:icon="@drawable/ic_menu_add"
         android:showAsAction="always"
         android:title="@string/quick_setting"/>
+    <item
+        android:id="@+id/about"
+        android:showAsAction="ifRoom"
+        android:title="@string/swipe_about_title"/>
 
 </menu>

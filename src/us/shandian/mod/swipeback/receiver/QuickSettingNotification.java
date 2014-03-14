@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import us.shandian.mod.swipeback.R;
 import us.shandian.mod.swipeback.provider.SettingsProvider;
@@ -27,6 +28,7 @@ public class QuickSettingNotification {
     public static void showAddNotificationView(Context context)
     {
         SettingsProvider.putBoolean(context, SettingsProvider.PACKAGE_NAME, SettingsProvider.QUIICK_SETTING_ENABLE, true);
+        Toast.makeText(context, R.string.quick_notification_ticker, Toast.LENGTH_SHORT).show();
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_quick_setting);
 
@@ -61,7 +63,7 @@ public class QuickSettingNotification {
         views.setOnClickPendingIntent(R.id.button_close, intentClose);
 
         Notification notification = new Notification.Builder(context)
-                .setTicker("在通知栏进行操作")
+                .setTicker(context.getString(R.string.quick_notification_ticker))
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContent(views)
                 .build();

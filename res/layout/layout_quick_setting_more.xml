@@ -22,15 +22,21 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView_app_icon"
         android:layout_toRightOf="@+id/imageView_app_icon"
-        android:text="应用:" />
+        android:text="@string/quick_setting_cur_app" />
 
-    <TextView
-        android:id="@+id/textView_app_name"
+    <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView_app_icon"
         android:layout_toRightOf="@id/textView1"
-        android:singleLine="true" />
+        android:scrollbars="none" >
+
+        <TextView
+            android:id="@+id/textView_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/textView2"
@@ -38,15 +44,21 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/imageView_app_icon"
         android:layout_toRightOf="@+id/imageView_app_icon"
-        android:text="页面:" />
+        android:text="@string/quick_setting_cur_ativity" />
 
-    <TextView
-        android:id="@+id/textView_activity_name"
+    <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/imageView_app_icon"
         android:layout_toRightOf="@+id/textView2"
-        android:singleLine="true" />
+        android:scrollbars="none" >
+
+        <TextView
+            android:id="@+id/textView_activity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+    </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,7 +75,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="左边" />
+            android:text="@string/swipe_edge_left" />
 
         <CheckBox
             android:id="@+id/checkBox_right"
@@ -72,7 +84,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="右边" />
+            android:text="@string/swipe_edge_right" />
 
         <CheckBox
             android:id="@+id/checkBox_bottom"
@@ -81,7 +93,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="底边" />
+            android:text="@string/swipe_edge_bottom" />
     </LinearLayout>
 
 </RelativeLayout>

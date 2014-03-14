@@ -21,30 +21,21 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/button_add"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="+\n单页"
-            android:textSize="12sp" />
-
-        <Button
             android:id="@+id/button_remove"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-\n单页"
+            android:text="@string/quick_setting_remove"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/button_add_app"
+            android:id="@+id/button_add"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="+\n应用"
+            android:text="@string/quick_setting_add"
             android:textSize="12sp" />
 
         <Button
@@ -53,7 +44,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-\n应用"
+            android:text="@string/quick_setting_remove_app"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/button_add_app"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/quick_setting_add_app"
             android:textSize="12sp" />
 
         <Button
@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="更多"
+            android:text="@string/quick_setting_more"
             android:textSize="12sp" />
 
         <ImageView
@@ -70,6 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_menu_cancel"
             android:textSize="12sp" />
     </LinearLayout>
