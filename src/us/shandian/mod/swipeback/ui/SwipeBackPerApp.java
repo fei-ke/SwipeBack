@@ -24,7 +24,10 @@ import us.shandian.mod.swipeback.adapter.ApplicationAdapter;
 import us.shandian.mod.swipeback.provider.SettingsProvider;
 import us.shandian.mod.swipeback.receiver.QuickSettingNotification;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
@@ -118,6 +121,7 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
         List<ApplicationInfo> list = mContext.getPackageManager().getInstalledApplications(
                 PackageManager.GET_GIDS);
         ArrayList<ApplicationInfo> applist = new ArrayList<ApplicationInfo>();
+
         mDialog.setMax(list.size());
         PackageManager pm = mContext.getPackageManager();
         int i = 1;
@@ -132,6 +136,26 @@ public class SwipeBackPerApp extends ListActivity implements OnItemClickListener
                 e.printStackTrace();
             }
         }
+        
+        // Sort in alphabetical
+        Collections.sort(applist, new Comparator<ApplicationInfo>() {
+
+            @Override
+            public int compare(ApplicationInfo p1, ApplicationInfo p2)
+            {
+                String name1 = p1.name;
+                String name2 = p2.name;
+                return Collator.getInstance().compare(name1, name2);
+            }
+
+        });
+        
+        // Add "Global"
+        ApplicationInfo globalInfo = new ApplicationInfo();
+        globalInfo.packageName = mContext.getPackageName();
+        globalInfo.name = mContext.getResources().getString(R.string.swipe_global);
+        applist.add(0, globalInfo);
+        
         return applist;
     }
 

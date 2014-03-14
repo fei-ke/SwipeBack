@@ -90,6 +90,9 @@ public class QuickSettingActionReceiver extends BroadcastReceiver {
                 break;
             case TYPE_MORE:
                 int edge = setting.getEdge();
+                if (edge == -1) {
+                    edge = SettingsProvider.getInt(context, packageName, SettingsProvider.SWIPEBACK_EDGE, 0 | SettingsProvider.SWIPEBACK_EDGE_LEFT);
+                }
                 final View contentView = View.inflate(context, R.layout.layout_quick_setting_more, null);
                 final CheckBox checkBoxLeft = (CheckBox) contentView.findViewById(R.id.checkBox_left);
                 final CheckBox checkBoxRight = (CheckBox) contentView.findViewById(R.id.checkBox_right);
@@ -102,8 +105,10 @@ public class QuickSettingActionReceiver extends BroadcastReceiver {
                 textViewActivityName.setText(activityTitle + "(" + componentName + ")");
 
                 ImageView imageViewIcon = (ImageView) contentView.findViewById(R.id.imageView_app_icon);
-                Drawable drawable = packageInfo.applicationInfo.loadIcon(context.getPackageManager());
-                imageViewIcon.setImageDrawable(drawable);
+                if (packageInfo != null) {
+                    Drawable drawable = packageInfo.applicationInfo.loadIcon(context.getPackageManager());
+                    imageViewIcon.setImageDrawable(drawable);
+                }
 
                 if ((edge & SettingsProvider.SWIPEBACK_EDGE_LEFT) != 0) {
                     checkBoxLeft.setChecked(true);

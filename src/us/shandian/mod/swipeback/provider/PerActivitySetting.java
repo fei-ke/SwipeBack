@@ -15,7 +15,7 @@ public class PerActivitySetting implements Serializable {
     String packageName = "";
     String componentName = "";
     String title = "";
-    int edge = 0;
+    int edge = -1;//未设置时
 
     public boolean isEnable() {
         return isEnable;

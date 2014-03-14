@@ -119,7 +119,7 @@ public class SwipeBackActivityHelper {
             method.invoke(mActivity, null);*/
 			XposedHelpers.callMethod(mActivity, "convertFromTranslucent");
         } catch (Throwable t) {
-			XposedBridge.log(t);
+//			XposedBridge.log(t);
         }
     }
 
@@ -152,7 +152,7 @@ public class SwipeBackActivityHelper {
             });*/
 			XposedHelpers.callMethod(mActivity, "convertToTranslucent", null);
         } catch (Throwable t) {
-			XposedBridge.log(t);
+//			XposedBridge.log(t);
         }
     }
 }

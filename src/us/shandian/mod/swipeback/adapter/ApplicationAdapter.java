@@ -43,25 +43,6 @@ public class ApplicationAdapter extends ArrayAdapter<ApplicationInfo>
 
         mPackageManager = mContext.getPackageManager();
 
-        // Sort in alphabetical
-        Collections.sort(appsList, new Comparator<ApplicationInfo>() {
-
-            @Override
-            public int compare(ApplicationInfo p1, ApplicationInfo p2)
-            {
-                String name1 = p1.loadLabel(mPackageManager).toString();
-                String name2 = p2.loadLabel(mPackageManager).toString();
-                return Collator.getInstance().compare(name1, name2);
-            }
-
-        });
-
-        // Add "Global"
-        ApplicationInfo info = new ApplicationInfo();
-        info.packageName = mContext.getPackageName();
-        info.name = mContext.getResources().getString(R.string.swipe_global);
-        mAppsList.add(0, info);
-
         for (int i = 0; i < mAppsList.size(); i++) {
             LayoutInflater layoutInflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

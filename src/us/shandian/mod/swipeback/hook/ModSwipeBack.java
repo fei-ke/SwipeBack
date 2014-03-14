@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.view.Window;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -59,12 +61,12 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                         ContentValues values = new ContentValues();
                         values.put(SettingsProvider.KEY_PACKAGE_NAME, activity.getPackageName());
                         values.put(SettingsProvider.KEY_COMPONENT_NAME, curComponentClassName);
-                        values.put(SettingsProvider.KEY_ACTIVITY_TITLE, activity.getTitle()
-                                .toString());
+                        values.put(SettingsProvider.KEY_ACTIVITY_TITLE, activity.getTitle().toString());
                         contentResolver.update(
-                                Uri.parse("content://"
-                                        + SettingsProvider.BRIDGE_CONTENT_PROVIDER_AUTHORITIES),
-                                values, null, null);
+                                Uri.parse("content://" + SettingsProvider.BRIDGE_CONTENT_PROVIDER_AUTHORITIES),
+                                values,
+                                null,
+                                null);
                     }
 
                 }
@@ -78,23 +80,28 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                             Activity activity = (Activity) param.thisObject;
+
                             banLaunchers(activity);
 
                             // Prefix
                             String packageName = activity.getApplication().getApplicationInfo().packageName;
+                            try { // Try to ignore dialogs
+                                Class<?> styleable = XposedHelpers.findClass("com.android.internal.R.styleable", null);
+                                int Window_windowIsFloating = XposedHelpers.getStaticIntField(styleable, "Window_windowIsFloating");
+                                TypedArray typedArray = (TypedArray) XposedHelpers.getObjectField(activity.getWindow(), "mWindowStyle");
 
-                            // Try to ignore dialogs
-                            Class<?> styleable = XposedHelpers.findClass(
-                                    "com.android.internal.R.styleable", null);
-                            int Window_windowIsFloating = XposedHelpers.getStaticIntField(
-                                    styleable, "Window_windowIsFloating");
-                            boolean windowIsFloating = activity.getWindow().getWindowStyle()
-                                    .getBoolean(Window_windowIsFloating, false);
+                                boolean windowIsFloating = false;
+                                if (typedArray != null) {
+                                    windowIsFloating = typedArray.getBoolean(Window_windowIsFloating, false);
+                                }
 
-                            if (windowIsFloating || isAppBanned(packageName) ||
-                                    // Ignore InCall* activities
-                                    activity.getComponentName().getClassName().contains("InCall")) {
-                                return;
+                                if (windowIsFloating || isAppBanned(packageName) ||
+                                        // Ignore InCall* activities
+                                        activity.getComponentName().getClassName().contains("InCall")) {
+                                    return;
+                                }
+                            } catch (Throwable t) {
+                                t.printStackTrace();
                             }
 
                             // Do this only when enabled
@@ -122,7 +129,7 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                                 helper.getSwipeBackLayout().setEnableGesture(true);
 
                                 // Get the egde
-                                if (edge == 0) {
+                                if (edge == -1) {
                                     edge = SettingsProvider.getInt(packageName,
                                             SettingsProvider.SWIPEBACK_EDGE,
                                             0 | SettingsProvider.SWIPEBACK_EDGE_LEFT);
