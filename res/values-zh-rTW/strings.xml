@@ -41,7 +41,7 @@
     <string name="quick_setting_cur_ativity">當前頁面:</string>
     <string name="quick_notification_ticker">切換到要處理的頁面,然後在通知欄進行操作</string>
     <string name="quick_setting_remove">×\n單頁</string>
-    <string name="quick_setting_remove_app">×\n單頁</string>
+    <string name="quick_setting_remove_app">×\n應用</string>
     <string name="quick_setting_add">√\n單頁</string>
     <string name="quick_setting_add_app">√\n應用</string>
     <string name="quick_setting_more">＝\n更多</string>

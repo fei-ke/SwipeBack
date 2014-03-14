@@ -44,7 +44,7 @@
     <string name="quick_setting_cur_ativity">当前页面:</string>
     <string name="quick_notification_ticker">切换到要处理的页面,然后在通知栏进行操作</string>
     <string name="quick_setting_remove">×\n单页</string>
-    <string name="quick_setting_remove_app">×\n单页</string>
+    <string name="quick_setting_remove_app">×\n应用</string>
     <string name="quick_setting_add">√\n单页</string>
     <string name="quick_setting_add_app">√\n应用</string>
     <string name="quick_setting_more">＝\n更多</string>
