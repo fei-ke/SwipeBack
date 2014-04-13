@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.view.Window;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -45,7 +44,6 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
             loadBannedApps();
 
             // 获取单个页面
-            // try {
             XposedHelpers.findAndHookMethod(Activity.class, "onResume", new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -71,9 +69,6 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
 
                 }
             });
-            // } catch (Throwable t) {
-            // XposedBridge.log(t);
-            // }
 
             XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class,
                     new XC_MethodHook() {
@@ -87,12 +82,18 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                             String packageName = activity.getApplication().getApplicationInfo().packageName;
                             try { // Try to ignore dialogs
                                 Class<?> styleable = XposedHelpers.findClass("com.android.internal.R.styleable", null);
+                                
                                 int Window_windowIsFloating = XposedHelpers.getStaticIntField(styleable, "Window_windowIsFloating");
-                                TypedArray typedArray = (TypedArray) XposedHelpers.getObjectField(activity.getWindow(), "mWindowStyle");
+                                
+                                int[] attrWindowsStyleable = (int[]) XposedHelpers.getStaticObjectField(styleable, "Window");
+                                
+                                TypedArray typedArray = activity.getWindow().getContext().obtainStyledAttributes(attrWindowsStyleable);
 
                                 boolean windowIsFloating = false;
                                 if (typedArray != null) {
                                     windowIsFloating = typedArray.getBoolean(Window_windowIsFloating, false);
+                                    typedArray.recycle();
+                                    typedArray = null;
                                 }
 
                                 if (windowIsFloating || isAppBanned(packageName) ||
@@ -112,7 +113,8 @@ public class ModSwipeBack implements IXposedHookZygoteInit, IXposedHookLoadPacka
                                 String curComponentClassName = activity.getComponentName().getClassName();
                                 XSharedPreferences preferences = new XSharedPreferences(SettingsProvider.PACKAGE_NAME, packageName);
                                 preferences.makeWorldReadable();
-                                PerActivitySetting activitySetting = PerActivitySetting.loadFromPreference(packageName, curComponentClassName);
+                                PerActivitySetting activitySetting = PerActivitySetting.loadFromPreference(packageName,
+                                        curComponentClassName);
                                 if (!activitySetting.isEnable()) {
                                     return;
                                 }
